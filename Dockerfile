@@ -36,6 +36,7 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
+COPY --chown=10010:10010 . /opt/CTFd
 
 RUN useradd \
     --no-log-init \
@@ -45,8 +46,6 @@ RUN useradd \
     && mkdir -p /var/log/CTFd /var/uploads \
     && chown -R 10010:10010 /var/log/CTFd /var/uploads /opt/CTFd \
     && chmod +x /opt/CTFd/docker-entrypoint.sh
-
-COPY --chown=10010:10010 . /opt/CTFd
 
 COPY --chown=10010:10010 --from=build /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
